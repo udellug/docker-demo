@@ -1,0 +1,54 @@
+#+REVEAL_ROOT: http://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+OPTIONS: num:nil toc:nil
+
+* Make
+* Docker
+  I hardly know her!
+
+or:
+
+  wtf is a container??
+* What is it?
+** a program that performs operating-system level virtualization
+Like a virtual machine, BUT...
+** All containers are run by a single operating system kernel
+As opposed to one kernel for every traditional VM
+
+This makes the docker ecosystem more lightweight
+* Images vs. Containers
+** An Image is like a template for a Container
+An image might be a linux distro, or a webserver, or a database, or some sort of development environement, or even...
+
+docker itself
+** About Images
+Images are defined in a Dockerfile, which specifies a base image to build off of, commands to run to set things up, etc.
+** 
+   :PROPERTIES:
+   :reveal_background: ./dockerfile.jpg
+   :reveal_background_trans: slide
+   :END:
+** About Containers
+Containers are the actual VM-like processes that you run on a computer
+
+They are based on images, and you start them with 
+
+`docker run ...`
+* Let's try an example
+** Suicide Linux!
+`docker run --rm -it tiagoad/suicide-linux`
+[https://hub.docker.com/r/tiagoad/suicide-linux/]
+** Let's break that down
+#+ATTR_REVEAL: :frag (roll-in roll-in roll-in  roll-in  roll-in) 
+  * docker - A runtime for containers
+  * run - Run a command in a new container
+  * --rm - Automatically remove the container when it exits
+  * -it - interactive tty, as in you can access the shell
+  * tiagoad/suicide-linux - a docker image from hub.docker.com
+* Here's a teensy-bit more practical example?
+** NGINX - a webserver
+$ docker run --rm -v ~/org/:/usr/share/nginx/html:ro -p 3000:80 -d nginx
+
+#+ATTR_REVEAL: :frag (roll-in roll-in roll-in  roll-in  roll-in) 
+  * -v allows sharing directories from the host to the container (in this case my ~/org/ gets mounted at /usr/share/nginx/html)
+  * -p allow mapping a host port to a container port (so the container's port 80 gets sent to my port 3000)
+** Now you can go to <my-ip>:3000/docker.html and see this page

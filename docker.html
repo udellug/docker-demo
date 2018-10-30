@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title></title>
+<meta name="author" content="(Ryan Geary)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/reveal.css"/>
+
+<link rel="stylesheet" href="http://cdn.jsdelivr.net/reveal.js/3.0.0/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'http://cdn.jsdelivr.net/reveal.js/3.0.0/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<section id="slide-org100be50">
+<h2 id="org100be50">Make</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgabe0cda">
+<h2 id="orgabe0cda">Docker</h2>
+<p>
+I hardly know her!
+</p>
+
+<p>
+or:
+</p>
+
+<p>
+wtf is a container??
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org60413a9">
+<h2 id="org60413a9">What is it?</h2>
+<div class="outline-text-2" id="text-org60413a9">
+</div>
+</section>
+<section id="slide-org282b2b5">
+<h3 id="org282b2b5">a program that performs operating-system level virtualization</h3>
+<p>
+Like a virtual machine, BUT&#x2026;
+</p>
+</section>
+<section id="slide-org799db16">
+<h3 id="org799db16">All containers are run by a single operating system kernel</h3>
+<p>
+As opposed to one kernel for every traditional VM
+</p>
+
+<p>
+This makes the docker ecosystem more lightweight
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org07713ef">
+<h2 id="org07713ef">Images vs. Containers</h2>
+<div class="outline-text-2" id="text-org07713ef">
+</div>
+</section>
+<section id="slide-orga57d3a4">
+<h3 id="orga57d3a4">An Image is like a template for a Container</h3>
+<p>
+An image might be a linux distro, or a webserver, or a database, or some sort of development environement, or even&#x2026;
+</p>
+
+<p>
+docker itself
+</p>
+</section>
+<section id="slide-orgc92fd63">
+<h3 id="orgc92fd63">About Images</h3>
+<p>
+Images are defined in a Dockerfile, which specifies a base image to build off of, commands to run to set things up, etc.
+</p>
+</section>
+<section id="slide-orgcb81c08" data-background="./dockerfile.jpg" data-background-transition="slide">
+<h3 id="orgcb81c08"></h3>
+</section>
+<section id="slide-org5e621cf">
+<h3 id="org5e621cf">About Containers</h3>
+<p>
+Containers are the actual VM-like processes that you run on a computer
+</p>
+
+<p>
+They are based on images, and you start them with 
+</p>
+
+<p>
+`docker run &#x2026;`
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org0bce7bd">
+<h2 id="org0bce7bd">Let's try an example</h2>
+<div class="outline-text-2" id="text-org0bce7bd">
+</div>
+</section>
+<section id="slide-org935a58d">
+<h3 id="org935a58d">Suicide Linux!</h3>
+<p>
+`docker run &#x2013;rm -it tiagoad/suicide-linux`
+[<a href="https://hub.docker.com/r/tiagoad/suicide-linux/">https://hub.docker.com/r/tiagoad/suicide-linux/</a>]
+</p>
+</section>
+<section id="slide-org5384669">
+<h3 id="org5384669">Let's break that down</h3>
+<ul>
+<li class="fragment roll-in">docker - A runtime for containers</li>
+<li class="fragment roll-in">run - Run a command in a new container</li>
+<li class="fragment roll-in">&#x2013;rm - Automatically remove the container when it exits</li>
+<li class="fragment roll-in">-it - interactive tty, as in you can access the shell</li>
+<li class="fragment roll-in">tiagoad/suicide-linux - a docker image from hub.docker.com</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgbea31f0">
+<h2 id="orgbea31f0">Here's a teensy-bit more practical example?</h2>
+<div class="outline-text-2" id="text-orgbea31f0">
+</div>
+</section>
+<section id="slide-org4b63514">
+<h3 id="org4b63514">NGINX - a webserver</h3>
+<p>
+$ docker run &#x2013;rm -v ~/org/:/usr/share/nginx/html:ro -p 3000:80 -d nginx
+</p>
+
+<ul>
+<li class="fragment roll-in">-v allows sharing directories from the host to the container (in this case my ~/org/ gets mounted at /usr/share/nginx/html)</li>
+<li class="fragment roll-in">-p allow mapping a host port to a container port (so the container's port 80 gets sent to my port 3000)</li>
+
+</ul>
+</section>
+<section id="slide-org1f40b2d">
+<h3 id="org1f40b2d">Now you can go to &lt;my-ip&gt;:3000/docker.html and see this page</h3>
+</section>
+</section>
+</div>
+</div>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/head.min.js"></script>
+<script src="http://cdn.jsdelivr.net/reveal.js/3.0.0/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'http://cdn.jsdelivr.net/reveal.js/3.0.0/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
